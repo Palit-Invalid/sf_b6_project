@@ -1,0 +1,24 @@
+---
+- name: Installing PostgreSQL Python libraries
+  dnf:
+    name: python3-psycopg2
+    state: present
+
+- name: Importing key repository
+  rpm_key:
+    key: https://download.postgresql.org/pub/repos/yum/keys/PGDG-RPM-GPG-KEY-RHEL
+    state: present
+
+- name: Adding repository
+  yum_repository:
+    name: docker-ce-stable
+    description: Docker CE Stable - $basearch
+    file: pgdg-redhat-all
+    baseurl: https://download.docker.com/linux/centos/$releasever/$basearch/stable
+    gpgcheck: true
+
+- name: Installing server
+  dnf:
+    name: postgresql{{ postgresql_version }}-server
+    state: present
+  notify: restart postgresql

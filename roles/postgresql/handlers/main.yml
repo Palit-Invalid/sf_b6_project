@@ -1,0 +1,7 @@
+---
+- name: Restarting postgresql
+  listen: restart postgresql
+  systemd_service:
+    name: "{{ postgresql_service_name }}"
+    state: restarted
+    enabled: true

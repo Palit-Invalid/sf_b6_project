@@ -1,0 +1,29 @@
+---
+- name: Importing key repository
+  block:
+    - name: Creating keyrings directory
+      file:
+        path: /etc/apt/keyrings/
+        state: directory
+
+    - name: Downloading key
+      get_url:
+        url: https://www.postgresql.org/media/keys/ACCC4CF8.asc
+        dest: /etc/apt/keyrings/apt.postgresql.org.asc
+
+    - name: Adding repository
+      apt_repository:
+        repo: "deb [arch=amd64 signed-by=/etc/apt/keyrings/apt.postgresql.org.asc] https://apt.postgresql.org/pub/repos/apt {{ ansible_distribution_release }}-pgdg main"
+        state: present
+        update_cache: true
+
+- name: Installing PostgreSQL
+  apt:
+    name:
+      - postgresql-{{ postgresql_version }}
+      - postgresql-client-{{ postgresql_version }}
+      - postgresql-doc-{{ postgresql_version }}
+      - libpq-dev
+      - postgresql-server-dev-{{ postgresql_version }}
+    state: present
+  notify: restart postgresql

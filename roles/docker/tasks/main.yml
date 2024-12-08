@@ -1,0 +1,10 @@
+---
+- name: Installing docker on {{ ansible_distribution.split(' ')[0] }}
+  include_tasks: install-{{ ansible_distribution.split(' ')[0] }}.yml
+
+- name: Adding user to group
+  user:
+    name: "{{ ansible_user }}"
+    groups: docker
+    append: true
+  notify: restart docker
