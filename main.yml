@@ -1,8 +1,8 @@
 ---
-# - hosts: app
-#   become: true
-#   roles:
-#     - name: docker
+- hosts: app
+  become: true
+  roles:
+    - name: docker
 
 - hosts: database
   become: true
