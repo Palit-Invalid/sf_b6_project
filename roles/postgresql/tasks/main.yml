@@ -26,4 +26,3 @@
     - name: Initdb in the new directory
       command:
         cmd: su - postgres -c '/usr/lib/postgresql/{{ postgresql_version }}/bin/initdb -D {{ postgresql_data_dir }}'
-        creates: "{{ postgresql_data_dir }}"
