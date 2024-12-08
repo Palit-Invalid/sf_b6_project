@@ -2,11 +2,9 @@
 - hosts: app
   become: true
   roles:
-    - name: docker
+    - docker
 
 - hosts: database
   become: true
   roles:
-    - name: postgresql
-      vars:
-        postgresql_version: 14
+    - postgresql
